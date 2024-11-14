@@ -1,8 +1,10 @@
 package repositories;
 
 import entities.TodoList;
+import entities.TodoList;
 
-public class TodoListRepositoryImpl implements TodoListRepository{
+public class TodoListRepositoryImpl implements TodoListRepository {
+
     public static TodoList[] todos = new TodoList[10];
 
     @Override
@@ -11,17 +13,18 @@ public class TodoListRepositoryImpl implements TodoListRepository{
     }
 
     @Override
-    public void add( final TodoList todoList) {
+    public void add(TodoList todolist) {
         resizeArrayIfFull();
 
         // add todo to array that has null element
         for (int i = 0; i < todos.length; i++) {
             if (todos[i] == null) {
-                todos[i] = todoList;
+                todos[i] = todolist;
                 break;
             }
         }
     }
+
     private static void resizeArrayIfFull() {
         // cek whether todos is full
         Boolean isFull = true;
@@ -35,7 +38,7 @@ public class TodoListRepositoryImpl implements TodoListRepository{
 
     private static void resizeArrayToTwoTimesBigger() {
         TodoList[] temp = todos;
-        todos = new TodoList[][;todos.length * 2];
+        todos = new TodoList[todos.length * 2];
         for (int i = 0; i < temp.length; i++) {
             todos[i] = temp[i];
         }
@@ -52,7 +55,7 @@ public class TodoListRepositoryImpl implements TodoListRepository{
     }
 
     @Override
-    public Boolean remove( final Integer number) {
+    public Boolean remove(Integer number) {
         if (isSelectedTodoNotValid(number)) {
             return false;
         }
@@ -87,15 +90,12 @@ public class TodoListRepositoryImpl implements TodoListRepository{
         return false;
     }
 
-
     @Override
-    public Boolean edit( final TodoList todoList) {
-        if (isSelectedTodoNotValid(todoList.getId())) {
+    public Boolean edit(TodoList todolist) {
+        if (isSelectedTodoNotValid(todolist.getId())) {
             return false;
         }
-        todos[todoList.getId() - 1] = todoList;
+        todos[todolist.getId() - 1] = todolist;
         return true;
     }
-
 }
-

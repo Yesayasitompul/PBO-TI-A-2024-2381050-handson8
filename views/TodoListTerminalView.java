@@ -1,18 +1,21 @@
 package views;
 
 import entities.TodoList;
+import entities.TodoList;
 import services.TodoListService;
 
 import java.util.Scanner;
+
 public class TodoListTerminalView implements TodoListView {
     public static Scanner scanner = new Scanner(System.in);
     private final TodoListService todoListService;
 
-    public  TodoListTerminalView(final TodoListService todoListService) {
+    public TodoListTerminalView(final TodoListService todoListService) {
         this.todoListService = todoListService;
     }
+
     @Override
-    public void run(){
+    public void run() {
         showMainMenu();
     }
 
@@ -64,7 +67,7 @@ public class TodoListTerminalView implements TodoListView {
         if (number.equals("x")) {
             //batal
         } else {
-            boolean success = todoListService.removeTodoList(Integer.valueOf())
+            boolean success = todoListService.removeTodoList(Integer.valueOf(number));
             if (!success) {
                 System.out.println("Gagal menghapus todo list : " + number);
             }
@@ -81,7 +84,7 @@ public class TodoListTerminalView implements TodoListView {
         if (newTodo.equals("x")) {
             return;
         }
-        boolean isEditTodoSuccess = editTodoList(Integer.valueOf(selectedTodo), newTodo);
+        boolean isEditTodoSuccess = todoListService.editTodoList(Integer.valueOf(selectedTodo), newTodo);
         if (isEditTodoSuccess) {
             System.out.println("Berhasil mengedit todo");
         } else {
@@ -89,23 +92,21 @@ public class TodoListTerminalView implements TodoListView {
         }
     }
 
-
     public String input(String info) {
         System.out.print(info + " : ");
-        var data = scanner.nextLine();
+        String data = scanner.nextLine();
         return data;
     }
 
     public void showTodoList() {
         System.out.println("TODO LIST");
-        TodoList[] todos = todoListService.getTodoList();
-        for (var i = 0; i < todos.length; i++) {
-            var todo = todos[i];
+        TodoList[] todos =  todoListService.getTodoList();
+        for (int i = 0; i < todos.length; i++) {
+            TodoList todo = todos[i];
             if (todo != null) {
                 System.out.println((i + 1) + ". " + todo.getTodo());
             }
         }
     }
+
 }
-
-
